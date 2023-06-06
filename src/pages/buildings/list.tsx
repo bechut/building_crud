@@ -113,6 +113,7 @@ const BuildingList: FC<LayoutProps> = ({ reduxStates }) => {
           <Button onClick={() => setCreateBuildingVisible(true)} type="primary">
             Create
             1
+            2
           </Button>
           <CreateBuilding
             visible={createBuildingVisible}
