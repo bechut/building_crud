@@ -15,6 +15,7 @@ import { TIME_FORMAT } from "../../constants";
 import moment from "moment";
 import { LayoutProps } from "../../routers";
 import { ReduxDispatchHelper } from "../../redux/helper";
+import CreateBuilding from "./create";
 
 interface IList {
   page: number;
@@ -33,6 +34,8 @@ const BuildingList: FC<LayoutProps> = ({ reduxStates }) => {
     populated: false,
   });
 
+  const [createBuildingVisible, setCreateBuildingVisible] = useState<any>(false);
+
   const onSetBuildingQuery = (states: any) =>
     setBuildingsQuery((prev) => ({ ...prev, ...states }));
 
@@ -40,7 +43,9 @@ const BuildingList: FC<LayoutProps> = ({ reduxStates }) => {
     new ReduxDispatchHelper<IList>(
       apiNames.buildings.list,
       buildingsQuery,
-      (payload: any) => {},
+      (payload: any) => {
+        setCreateBuildingVisible(null);
+      },
       (errors: any) => {
         notification.error({ message: errors?.exception?.response?.message });
       }
@@ -48,8 +53,8 @@ const BuildingList: FC<LayoutProps> = ({ reduxStates }) => {
   };
 
   useMemo(() => {
-    handleFetchBuilding();
-  }, [buildingsQuery.page]);
+    if (createBuildingVisible === false) handleFetchBuilding();
+  }, [createBuildingVisible]);
 
   const columns = [
     {
@@ -93,6 +98,7 @@ const BuildingList: FC<LayoutProps> = ({ reduxStates }) => {
     extra
   ) => {
     if (pagination.current !== buildingsQuery.page) {
+      setCreateBuildingVisible(false);
       onSetBuildingQuery({ page: pagination.current });
     }
   };
@@ -103,7 +109,16 @@ const BuildingList: FC<LayoutProps> = ({ reduxStates }) => {
         <Col>
           <Typography.Title level={2}>Building</Typography.Title>
         </Col>
-        <Col></Col>
+        <Col>
+          <Button onClick={() => setCreateBuildingVisible(true)} type="primary">
+            Create
+          </Button>
+          <CreateBuilding
+            visible={createBuildingVisible}
+            setVisible={setCreateBuildingVisible}
+            reduxStates={reduxStates}
+          />
+        </Col>
       </Row>
       {buildings?.data?.pager && (
         <Table
