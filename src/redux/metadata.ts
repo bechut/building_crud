@@ -4,6 +4,7 @@ export const apiNames = {
   buildings: {
     create: "create_building",
     detail: "detail_building",
+    list: "list_building",
   },
 };
 
@@ -21,6 +22,11 @@ const metadata = [
         method: axiosCaller("get"),
         uri: "/:id",
         name: apiNames.buildings.detail,
+      },
+      {
+        method: axiosCaller("get"),
+        uri: "/",
+        name: apiNames.buildings.list,
       },
     ],
   },
