@@ -107,11 +107,13 @@ const BuildingList: FC<LayoutProps> = ({ reduxStates }) => {
     <Space direction="vertical" style={{ width: "100%" }}>
       <Row justify={"space-between"} align={"middle"}>
         <Col>
-          <Typography.Title level={2}>Building</Typography.Title>
+          <Typography.Title level={2}>Building</Typography.Title>1
         </Col>
         <Col>
           <Button onClick={() => setCreateBuildingVisible(true)} type="primary">
             Create
+            1
+            2
           </Button>
           <CreateBuilding
             visible={createBuildingVisible}
